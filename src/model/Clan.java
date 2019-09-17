@@ -1,8 +1,15 @@
 package model;
 
 public class Clan {
-	private String Name;
-	private int numEstudiantes;
+	//attributes
+	private String name;
+	private int numNinjas;
 	private Character firstC;
+	//methods
+	public Clan(String name) {
+		this.name = name;
+		this.numNinjas=0;
+	}
+	
 	
 }
