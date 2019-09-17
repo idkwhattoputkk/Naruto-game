@@ -1,5 +1,7 @@
 package userInterface;
 
-public class Main {
+import model.Game;
 
+public class Main {
+	Game shippuden;
 }
