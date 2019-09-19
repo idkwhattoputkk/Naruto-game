@@ -10,5 +10,21 @@ public class Game {
 		this.name="naruto's shippuden";
 		clans = new ArrayList<>();
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public ArrayList<Clan> getClans() {
+		return clans;
+	}
+
+	public void setClans(ArrayList<Clan> clans) {
+		this.clans = clans;
+	}
 	
 }

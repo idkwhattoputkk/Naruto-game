@@ -17,6 +17,42 @@ public class Character {
 		next=null;
 		prev=null;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPersonality() {
+		return personality;
+	}
+	public void setPersonality(String personality) {
+		this.personality = personality;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public int getPower() {
+		return power;
+	}
+	public void setPower(int power) {
+		this.power = power;
+	}
+	public Character getNext() {
+		return next;
+	}
+	public void setNext(Character next) {
+		this.next = next;
+	}
+	public Character getPrev() {
+		return prev;
+	}
+	public void setPrev(Character prev) {
+		this.prev = prev;
+	}
 	
 	
 	
