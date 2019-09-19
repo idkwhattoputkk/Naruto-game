@@ -1,5 +1,7 @@
 package model;
 
+import uniandes.cupi2.aerolinea.mundo.Character;
+
 public class Clan {
 	//attributes
 	private String name;
@@ -9,6 +11,28 @@ public class Clan {
 	public Clan(String name) {
 		this.name = name;
 		this.numNinjas=0;
+	}
+	public void addOrderedNinja(String name, String personality, String date, int power) {
+
+        Character nuevo = new Character( name, personality, date, power );
+        if(firstC == null )
+            firstC = nuevo;
+        else if( firstC.getPower() > power)
+        {
+            firstC.insertarAntes( nuevo );
+            firstC = nuevo;
+        }
+        else
+        {
+            Character CharacterTemp0 = null;
+            Character CharacterTemp1 = firstC;
+            while( CharacterTemp1 != null && CharacterTemp1.getPower()< power )
+            {
+                CharacterTemp0 = CharacterTemp1;
+                CharacterTemp1 = CharacterTemp1.getNext();
+            }
+            CharacterTemp0.insertarDespues( nuevo );
+        }
 	}
 	public String getName() {
 		return name;

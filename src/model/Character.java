@@ -53,6 +53,20 @@ public class Character {
 	public void setPrev(Character prev) {
 		this.prev = prev;
 	}
+	public void insertarDespues(Character nuevo) {
+		 nuevo.next = next;
+	        if( next != null )
+	            next.prev = nuevo;
+		        nuevo.prev = this;
+		        next = nuevo;
+	}
+	public void insertarAntes(Character nuevo) {
+		if( prev != null )
+            prev.next = nuevo;
+	        nuevo.prev = prev;
+	        nuevo.next = this;
+	        prev = nuevo;
+	}
 	
 	
 	
