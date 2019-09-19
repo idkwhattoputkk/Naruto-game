@@ -11,6 +11,17 @@ public class Technique {
 		this.factor = factor;
 		next=null;
 	}
+	public int compareByFactor(Technique t) {
+		int valueToComparate = factor.compareToIgnoreCase(t.factor);
+		if (valueToComparate < 0) {
+			valueToComparate = -1;
+		} else if (valueToComparate == 0) {
+			valueToComparate = 0;
+		} else {
+			valueToComparate = 1;
+		}
+		return valueToComparate;
+	}
 	public String getName() {
 		return name;
 	}

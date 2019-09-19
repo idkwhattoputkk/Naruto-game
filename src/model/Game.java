@@ -26,5 +26,21 @@ public class Game {
 	public void setClans(ArrayList<Clan> clans) {
 		this.clans = clans;
 	}
-	
+//	insertion
+	public void orderByDateClan() {
+		for(int i=1;i<clans.size();i++) {
+			Clan toIterate = (Clan) clans.get(i);
+			boolean finished =false;
+			
+			for(int j=i;j>0 && !finished;j--) {
+				Clan fromNow=(Clan) clans.get(j-1);
+				if(fromNow.compareByName(toIterate)>0) {
+					clans.set(j, fromNow);
+					clans.set(j-1, toIterate);
+				}else {
+					finished=true;
+				}
+			}
+		}
+	}
 }

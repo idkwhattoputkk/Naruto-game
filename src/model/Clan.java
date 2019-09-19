@@ -1,7 +1,5 @@
 package model;
 
-import uniandes.cupi2.aerolinea.mundo.Character;
-
 public class Clan {
 	//attributes
 	private String name;
@@ -19,7 +17,7 @@ public class Clan {
             firstC = nuevo;
         else if( firstC.getPower() > power)
         {
-            firstC.insertarAntes( nuevo );
+            firstC.addBefore( nuevo );
             firstC = nuevo;
         }
         else
@@ -31,8 +29,23 @@ public class Clan {
                 CharacterTemp0 = CharacterTemp1;
                 CharacterTemp1 = CharacterTemp1.getNext();
             }
-            CharacterTemp0.insertarDespues( nuevo );
+            CharacterTemp0.addAfter( nuevo );
         }
+	}
+//	selection
+	public void orderNinjas(){
+		if(listSize()>0) {
+			
+		}
+	}
+	public int listSize(){
+		Character actual = firstC;
+		int size=0;
+		while(actual!=null) {
+			size++;
+			actual = actual.getNext();
+		}
+		return size;
 	}
 	public String getName() {
 		return name;
@@ -51,6 +64,17 @@ public class Clan {
 	}
 	public void setFirstC(Character firstC) {
 		this.firstC = firstC;
+	}
+	public int compareByName(Clan toIterate) {
+		int valueToComparate = name.compareToIgnoreCase(toIterate.name);
+		if (valueToComparate < 0) {
+			valueToComparate = -1;
+		} else if (valueToComparate == 0) {
+			valueToComparate = 0;
+		} else {
+			valueToComparate = 1;
+		}
+		return valueToComparate;
 	}
 	
 	
