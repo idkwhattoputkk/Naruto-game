@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Game {
 	private String name;
-	private ArrayList<Clan> clans;
+	private Clan firstClan;
 	
 	public Game() {
 		this.name="naruto's shippuden";
-		clans = new ArrayList<>();
+		firstClan = null;
 	}
 
 	public String getName() {
@@ -19,28 +19,12 @@ public class Game {
 		this.name = name;
 	}
 
-	public ArrayList<Clan> getClans() {
-		return clans;
+	public Clan getFirstClan() {
+		return firstClan;
 	}
 
-	public void setClans(ArrayList<Clan> clans) {
-		this.clans = clans;
+	public void setFirstClan(Clan firstClan) {
+		this.firstClan = firstClan;
 	}
-//	insertion
-	public void orderByDateClan() {
-		for(int i=1;i<clans.size();i++) {
-			Clan toIterate = (Clan) clans.get(i);
-			boolean finished =false;
-			
-			for(int j=i;j>0 && !finished;j--) {
-				Clan fromNow=(Clan) clans.get(j-1);
-				if(fromNow.compareByName(toIterate)>0) {
-					clans.set(j, fromNow);
-					clans.set(j-1, toIterate);
-				}else {
-					finished=true;
-				}
-			}
-		}
-	}
+
 }
