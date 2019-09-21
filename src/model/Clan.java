@@ -5,10 +5,15 @@ public class Clan {
 	private String name;
 	private int numNinjas;
 	private Character firstC;
+	private Character lastC;
+	private Clan next;
+	private Clan prev;
 	//methods
 	public Clan(String name) {
 		this.name = name;
 		this.numNinjas=0;
+		next = null;
+		prev =null;
 	}
 	public void addOrderedNinja(String name, String personality, String date, int power) {
 
@@ -32,12 +37,12 @@ public class Clan {
             CharacterTemp0.addAfter( nuevo );
         }
 	}
-//	selection
-	public void orderNinjas(){
-		if(listSize()>0) {
-			
-		}
-	}
+////	selection
+//	public void orderNinjas(){
+//		if(listSize()>0) {
+//			
+//		}
+//	}
 	public int listSize(){
 		Character actual = firstC;
 		int size=0;
@@ -65,6 +70,12 @@ public class Clan {
 	public void setFirstC(Character firstC) {
 		this.firstC = firstC;
 	}
+	public Clan getNext() {
+		return next;
+	}
+	public void setNext(Clan next) {
+		this.next = next;
+	}
 	public int compareByName(Clan toIterate) {
 		int valueToComparate = name.compareToIgnoreCase(toIterate.name);
 		if (valueToComparate < 0) {
@@ -75,6 +86,20 @@ public class Clan {
 			valueToComparate = 1;
 		}
 		return valueToComparate;
+	}
+	public void addBefore(Clan nuevo) {
+		if( prev != null )
+            prev.next = nuevo;
+	        nuevo.prev = prev;
+	        nuevo.next = this;
+	        prev = nuevo;
+	}
+	public void addAfter(Clan nuevo) {
+		 nuevo.next = next;
+	        if( next != null )
+	            next.prev = nuevo;
+		        nuevo.prev = this;
+		        next = nuevo;
 	}
 	
 	
