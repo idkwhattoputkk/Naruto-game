@@ -56,11 +56,8 @@ public class Technique {
 		 	next = nuevo;
 		
 	}
-	public void addBefore(Technique nuevo) {
-		Technique before = null;
+	public void changeNext(Technique firstTech) {
+		next=firstTech;
 		
-		before.addBefore(nuevo);
-					
-				
 	}
 }

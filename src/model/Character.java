@@ -27,7 +27,7 @@ public class Character {
             firstTech = nuevo;
         else if( firstTech.compareByName(nuevo)>0)
         {
-            firstTech.addBefore( nuevo );
+            firstTech.changeNext(firstTech);
             firstTech = nuevo;
         }
         else
@@ -103,6 +103,16 @@ public class Character {
 		numTech=size;
 		return size;
 	}
+	public Technique findBefore(Technique toFind) {
+		Technique before = null;
+		Technique actual = firstTech;
+		
+		while(actual!=null && !actual.getName().contentEquals(toFind.getName())) {
+			before=actual;
+			actual=actual.getNext();
+			}
+		return actual!=null? before:null;
+	}
 //	bubble
 	public void orderingTechniques(){
 		 if ( listSize() > 1) {
@@ -137,7 +147,14 @@ public class Character {
 	        } while( cambio );
 	    }
 	}
-	
+	public String search(String x){
+        for( Technique p = firstTech; p != null; p = p.getNext())
+        {
+            if( p.getName().equalsIgnoreCase(x))
+                return p.toString();
+        }
+        return "No encontrado";
+    }
 	
 	
 }

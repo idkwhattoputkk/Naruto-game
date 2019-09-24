@@ -123,6 +123,14 @@ public class Clan {
 		return name;
 		
 	}
+	public String search(String x){
+        for( Character p = firstC; p != null; p = p.getNext())
+        {
+            if( p.getName().equalsIgnoreCase(x))
+                return p.toString();
+        }
+        return "No encontrado";
+    }
 	
 	
 }
