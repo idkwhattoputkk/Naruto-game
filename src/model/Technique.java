@@ -22,6 +22,17 @@ public class Technique {
 		}
 		return valueToComparate;
 	}
+	public int compareByName(Technique t) {
+		int valueToComparate = name.compareToIgnoreCase(t.name);
+		if (valueToComparate < 0) {
+			valueToComparate = -1;
+		} else if (valueToComparate == 0) {
+			valueToComparate = 0;
+		} else {
+			valueToComparate = 1;
+		}
+		return valueToComparate;
+	}
 	public String getName() {
 		return name;
 	}
@@ -40,5 +51,16 @@ public class Technique {
 	public void setNext(Technique next) {
 		this.next = next;
 	}
-	
+	public void addAfter(Technique nuevo) {
+		 	nuevo.next=next;
+		 	next = nuevo;
+		
+	}
+	public void addBefore(Technique nuevo) {
+		Technique before = null;
+		
+		before.addBefore(nuevo);
+					
+				
+	}
 }

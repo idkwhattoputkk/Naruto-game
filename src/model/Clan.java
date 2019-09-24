@@ -5,7 +5,6 @@ public class Clan {
 	private String name;
 	private int numNinjas;
 	private Character firstC;
-	private Character lastC;
 	private Clan next;
 	private Clan prev;
 	//methods
@@ -15,8 +14,8 @@ public class Clan {
 		next = null;
 		prev =null;
 	}
-	public void addOrderedNinja(String name, String personality, String date, int power) {
-
+	public void addOrderedNinja(String name, String personality, String date, int power) throws RepetidoException {
+		if(checkName(name)){
         Character nuevo = new Character( name, personality, date, power );
         if(firstC == null )
             firstC = nuevo;
@@ -36,13 +35,24 @@ public class Clan {
             }
             CharacterTemp0.addAfter( nuevo );
         }
+		}
+		else {
+			throw new RepetidoException(name);
+		}
 	}
-////	selection
-//	public void orderNinjas(){
-//		if(listSize()>0) {
-//			
-//		}
-//	}
+	private boolean checkName(String name2) {
+		Character ninja = firstC;
+		boolean flag=false;
+		while(ninja!=null&&!flag) {
+			if(ninja.getName().equalsIgnoreCase(name2)){
+				flag=true;
+			}
+			else {
+				ninja = ninja.getNext();
+			}
+		}
+		return flag;
+	}
 	public int listSize(){
 		Character actual = firstC;
 		int size=0;
@@ -51,6 +61,12 @@ public class Clan {
 			actual = actual.getNext();
 		}
 		return size;
+	}
+//	selection
+	public void orderNinjas(){
+		if(listSize()>0) {
+			
+		}
 	}
 	public String getName() {
 		return name;
@@ -87,19 +103,25 @@ public class Clan {
 		}
 		return valueToComparate;
 	}
-	public void addBefore(Clan nuevo) {
+	public void addBefore(Clan nuevo) {	
 		if( prev != null )
             prev.next = nuevo;
-	        nuevo.prev = prev;
-	        nuevo.next = this;
-	        prev = nuevo;
+		
+        nuevo.prev = prev;
+        nuevo.next = this;
+        prev = nuevo;
 	}
 	public void addAfter(Clan nuevo) {
 		 nuevo.next = next;
 	        if( next != null )
 	            next.prev = nuevo;
-		        nuevo.prev = this;
-		        next = nuevo;
+	        
+	        nuevo.prev = this;
+	        next = nuevo;
+	}
+	public String toString() {
+		return name;
+		
 	}
 	
 	

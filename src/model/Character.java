@@ -20,6 +20,29 @@ public class Character {
 		next=null;
 		prev=null;
 	}
+	public void agregarTechnique(String name, String factor) throws RepetidoException
+    {
+        Technique nuevo = new Technique( name, factor);
+        if( firstTech == null )
+            firstTech = nuevo;
+        else if( firstTech.compareByName(nuevo)>0)
+        {
+            firstTech.addBefore( nuevo );
+            firstTech = nuevo;
+        }
+        else
+        {
+            Technique TechniqueTemp0 = null;
+            Technique TechniqueTemp1 = firstTech;
+            while( TechniqueTemp1 != null && TechniqueTemp1.compareByName(nuevo)<0)
+            {
+                TechniqueTemp0 = TechniqueTemp1;
+                TechniqueTemp1 = TechniqueTemp1.getNext();
+            }
+            TechniqueTemp0.addAfter( nuevo );
+        }
+    }
+	
 	public String getName() {
 		return name;
 	}
@@ -77,6 +100,7 @@ public class Character {
 			size++;
 			actual = actual.getNext();
 		}
+		numTech=size;
 		return size;
 	}
 //	bubble
