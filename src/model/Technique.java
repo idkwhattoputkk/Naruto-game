@@ -1,6 +1,8 @@
 package model;
 
-public class Technique {
+import java.io.Serializable;
+
+public class Technique implements Serializable {
 //	attributes
 	private String name;
 	private String factor;
@@ -58,6 +60,10 @@ public class Technique {
 	}
 	public void changeNext(Technique firstTech) {
 		next=firstTech;
+		
+	}
+	public void deleteNext() {
+		next = next.next;
 		
 	}
 }

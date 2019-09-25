@@ -1,6 +1,12 @@
 package model;
 
-public class Clan {
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class Clan implements Serializable  {
 	//attributes
 	private String name;
 	private int numNinjas;
@@ -13,6 +19,10 @@ public class Clan {
 		this.numNinjas=0;
 		next = null;
 		prev =null;
+	}
+	public void addTechnique(String n, String name, String factor) throws RepetidoException {
+		Character x = search(n);
+		x.addTechnique(name, factor);
 	}
 	public void addOrderedNinja(String name, String personality, String date, int power) throws RepetidoException {
 		if(checkName(name)){
@@ -35,9 +45,10 @@ public class Clan {
             }
             CharacterTemp0.addAfter( nuevo );
         }
+        numNinjas++;
 		}
 		else {
-			throw new RepetidoException(name);
+			throw new RepetidoException("este ninja ya esxiste");
 		}
 	}
 	private boolean checkName(String name2) {
@@ -64,9 +75,81 @@ public class Clan {
 	}
 //	selection
 	public void orderNinjas(){
-		if(listSize()>0) {
-			
+		if(listSize()>1) {
 		}
+	}
+	public void deleteNode(String name) throws NullNode{
+		if(firstC != null) {
+			if(firstC.getName().equalsIgnoreCase(name)) {
+				firstC = firstC.getNext();
+			}else {
+				Character x = search(name);
+				if(x==null) {
+					throw new NullNode("No existe un ninja con ese nombre");
+				}
+				x.setPrev(x.getNext().getNext());
+			}
+			numNinjas--;
+		}else {
+			throw new NullNode("No existe un ninja con ese nombre");
+		}
+	}
+	public void saveCharacter(String h){		
+		File file = new File(h);
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+			Character actual = firstC;
+			while(actual!=null) {
+				oos.writeObject(actual);
+				actual = actual.getNext();
+			}
+			oos.close();
+			}catch (IOException e) {
+				e.printStackTrace();
+		}
+	}
+	public void addBefore(Clan nuevo) {	
+		if( prev != null )
+            prev.next = nuevo;
+		
+        nuevo.prev = prev;
+        nuevo.next = this;
+        prev = nuevo;
+	}
+	public void addAfter(Clan nuevo) {
+		 nuevo.next = next;
+	        if( next != null )
+	            next.prev = nuevo;
+	        
+	        nuevo.prev = this;
+	        next = nuevo;
+	}
+	public String toString() {
+		return name;
+		
+	}
+	public Character search(String x){
+        for( Character p = firstC; p != null; p = p.getNext())
+        {
+            if( p.getName().equalsIgnoreCase(x))
+                return p;
+        }
+        return null;
+    }
+	public void saveTechnique(String pathTechniques) {
+		Character actual = firstC;
+		while(actual!=null) {
+			actual.saveTechnique(pathTechniques);
+			actual=actual.getNext();
+		}
+		
+	}
+	public void orderTechniques() {
+		Character actual = firstC;
+		while(actual!=null) {
+			actual.orderingTechniques();
+			actual=actual.getNext();
+		}		
 	}
 	public String getName() {
 		return name;
@@ -103,34 +186,5 @@ public class Clan {
 		}
 		return valueToComparate;
 	}
-	public void addBefore(Clan nuevo) {	
-		if( prev != null )
-            prev.next = nuevo;
-		
-        nuevo.prev = prev;
-        nuevo.next = this;
-        prev = nuevo;
-	}
-	public void addAfter(Clan nuevo) {
-		 nuevo.next = next;
-	        if( next != null )
-	            next.prev = nuevo;
-	        
-	        nuevo.prev = this;
-	        next = nuevo;
-	}
-	public String toString() {
-		return name;
-		
-	}
-	public String search(String x){
-        for( Character p = firstC; p != null; p = p.getNext())
-        {
-            if( p.getName().equalsIgnoreCase(x))
-                return p.toString();
-        }
-        return "No encontrado";
-    }
-	
 	
 }

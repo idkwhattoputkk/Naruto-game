@@ -1,12 +1,22 @@
 package model;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+
 public class Game {
+	// attributes
+	public final static String PATH_CLANS="data"+File.separator+"clans.txt";
+	public final static String PATH_NINJAS="data"+File.separator+"ninjas.txt";
+	public final static String PATH_TECHNIQUES="data"+File.separator+"techniques.txt";
 	private String name;
-	private Clan firstClan;
-	
+	private ArrayList<Clan> clans;
+	//methods
 	public Game() {
 		this.name="naruto's shippuden";
-		firstClan = null;
+		clans = new ArrayList<>();
 	}
 
 	public String getName() {
@@ -17,83 +27,109 @@ public class Game {
 		this.name = name;
 	}
 
-	public Clan getfirstClanlan() {
-		return firstClan;
+	public ArrayList<Clan> getclans() {
+		return clans;
 	}
 
-	public void setfirstClanlan(Clan firstClan) {
-		this.firstClan = firstClan;
+	public void setclans(ArrayList<Clan> clans) {
+		this.clans = clans;
 	}
-	public void addOrderedClan(String name) {
-
-        Clan nuevo = new Clan( name);
-        if(firstClan == null )
-            firstClan = nuevo;
-        else if( firstClan.compareByName(nuevo)>0)
-        {
-            firstClan.addBefore( nuevo );
-            firstClan = nuevo;
-        }
-        else
-        {
-            Clan ClanTemp0 = null;
-            Clan ClanTemp1 = firstClan;
-            while( ClanTemp1 != null && ClanTemp1.compareByName(nuevo)<0 )
-            {
-                ClanTemp0 = ClanTemp1;
-                ClanTemp1 = ClanTemp1.getNext();
-            }
-            ClanTemp0.addAfter( nuevo );
-        }
-	}
-//	public void orderclans() {
-//		Clan actual = firstClan;
-//		while(actual !=null) {
-//			actual.orderactuals();
-//			actual= actual.getNext();
-//		}
-//	}
-	public void addClanOrdered(String name) throws RepetidoException {
-		if(checkName(name)){
-	        Clan nuevo = new Clan(name);
-	        if(firstClan == null )
-	            firstClan = nuevo;
-	        else if( firstClan.compareByName(nuevo)>0)
-	        {
-	            firstClan.addBefore( nuevo );
-	            firstClan = nuevo;
-	        }
-	        else
-	        {
-	            Clan clanTemp0 = null;
-	            Clan clanTemp1 = firstClan;
-	            while( clanTemp1 != null && clanTemp1.compareByName(clanTemp0)<0 )
-	            {
-	                clanTemp0 = clanTemp1;
-	                clanTemp1 = clanTemp1.getNext();
-	            }
-	            clanTemp0.addAfter( nuevo );
-	        }
+	public void orderByName() {
+		for(int i=1;i<clans.size();i++) {
+			Clan toIterate = (Clan) clans.get(i);
+			boolean finished =false;
+			
+			for(int j=i;j>0 && !finished;j--) {
+				Clan fromNow=(Clan) clans.get(j-1);
+				if(fromNow.compareByName(toIterate)>0) {
+					clans.set(j, fromNow);
+					clans.set(j-1, toIterate);
+				}else {
+					finished=true;
+				}
 			}
-			else {
-				throw new RepetidoException(name);
+		}
+	}
+	public String addCharacter(String nameClan, String name, String personality, String date, int power) {
+		Clan iterative = searchClan(nameClan);
+		String toReturn="the ninja has been succesfully added";
+		if(iterative != null) {
+			try {
+				iterative.addOrderedNinja(name, personality, date, power);
+			} catch (RepetidoException e) {
+				toReturn=e.getMessage();
 			}
+		}
+		return toReturn;
 	}
 
-	private boolean checkName(String name2){
-        for( Clan p = firstClan; p != null; p = p.getNext())
-        {
-            if( p.getName().equalsIgnoreCase(name2))
-                return true;
-        }
-        return false;
-    }
-	public String search(String x){
-        for( Clan p = firstClan; p != null; p = p.getNext())
-        {
-            if( p.getName().equalsIgnoreCase(x))
-                return p.toString();
-        }
-        return "No encontrado";
-    }
+	private Clan searchClan(String name2) {
+		Clan toReturn=null;
+		boolean ended = false;
+		for (int i = 0; i < clans.size()&&!ended; i++) {
+			if(clans.get(i).getName().equalsIgnoreCase(name2));
+				toReturn=clans.get(i);
+				ended = true;
+		}
+		return toReturn;
+	}
+	public String addTechnique(String nameClan, String name, String tech, String factor) {
+		Clan iterative = searchClan(nameClan);
+		String toReturn="the Technique has been succesfully added";
+		Character itera= iterative.search(name);
+		try {
+			itera.addTechnique(tech, factor);
+		} catch (RepetidoException e) {
+			 toReturn = e.getMessage();
+		}
+		return toReturn;
+	}
+	public void orderEveryNinjaList() {
+		for (int i = 0; i < clans.size(); i++) {
+			clans.get(i).orderNinjas();
+		}
+	}
+	public void saveClans(){
+		File data = new File("data");
+		if(!data.exists())
+			data.mkdir();
+		
+		File file = new File(PATH_CLANS);
+		try {
+			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+			for (int i = 0; i < clans.size(); i++) {
+				oos.writeObject(clans.get(i));
+			}
+			oos.close();
+			}catch (IOException e) {
+				e.printStackTrace();
+		}
+	}
+	public void saveCharacters() {
+		File data = new File("data");
+		if(!data.exists())
+			data.mkdir();
+		
+		for (int i = 0; i < clans.size(); i++) {
+			clans.get(i).saveCharacter(PATH_NINJAS);
+		}
+	}
+	public void saveTechniques() {
+		File data = new File("data");
+		if(!data.exists())
+			data.mkdir();
+		
+		for (int i = 0; i < clans.size(); i++) {
+			clans.get(i).saveTechnique(PATH_TECHNIQUES);
+		}
+	}
+	public void addClan(String name) {
+		Clan toAdd=new Clan(name);
+		clans.add(toAdd);
+	}
+	public void orderEveryTechniqueList() {
+		for (int i = 0; i < clans.size(); i++) {
+			clans.get(i).orderTechniques();
+		}
+	}
 }
