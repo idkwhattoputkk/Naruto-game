@@ -63,11 +63,11 @@ public class Game {
 		return toReturn;
 	}
 
-	private Clan searchClan(String name2) {
+	public Clan searchClan(String c) {
 		Clan toReturn=null;
 		boolean ended = false;
 		for (int i = 0; i < clans.size()&&!ended; i++) {
-			if(clans.get(i).getName().equalsIgnoreCase(name2));
+			if(clans.get(i).getName().equalsIgnoreCase(c));
 				toReturn=clans.get(i);
 				ended = true;
 		}
@@ -130,6 +130,41 @@ public class Game {
 	public void orderEveryTechniqueList() {
 		for (int i = 0; i < clans.size(); i++) {
 			clans.get(i).orderTechniques();
+		}
+	}
+	public Technique searchTechnique(String c, String n, String n2) {
+		Clan y =searchClan(c);
+		Character z = y.search(n);
+		Technique t =z.search(n2);
+		return t;
+	}
+
+	public Character searNinja(String c, String n) {
+		return searchClan(c).search(n);
+		
+	}
+
+	public boolean deleteNode(String c) {
+		clans.remove(searchClan(c));
+		return true;
+	}
+
+	public boolean deleteTech(String c, String n, String t) {
+		try {
+		searchClan(c).search(n).deleteNode(t);
+		return true;
+		}catch(Exception e) {
+			return false;
+		}
+		
+	}
+
+	public boolean deleteN(String c, String n) {
+		try {
+			searchClan(c).deleteNode(n);
+			return true;
+		}catch(Exception e) {
+			return false;
 		}
 	}
 }

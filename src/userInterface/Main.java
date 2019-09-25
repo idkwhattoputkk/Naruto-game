@@ -33,7 +33,7 @@ public class Main {
 				System.out.println("digite el poder: ");
 				int power=Integer.parseInt(reader.nextLine());
 				System.out.println(" ");
-				shippuden.addCharacter(nameClan, name, personality, date, power);
+				System.out.println(shippuden.addCharacter(nameClan, name, personality, date, power));
 				long tf=System.currentTimeMillis();
 				System.out.println(tf-t1);
 				break;
@@ -50,57 +50,92 @@ public class Main {
 				System.out.println("nombre del clan : ");
 				nameClan = reader.nextLine();
 				System.out.println("nombre del ninja: ");
-				String name = reader.nextLine();
+				name = reader.nextLine();
 				System.out.println("Tecnica: ");
 				String tech = reader.nextLine();
 				System.out.println("factor: ");
 				String factor = reader.nextLine();
-				shippuden.addTechnique(nameClan,name, tech, factor);
+				System.out.println(shippuden.addTechnique(nameClan,name, tech, factor));
 				long ty=System.currentTimeMillis();
 				System.out.println(ty-tx);
 				break;
 			case 4:
 				long i=System.currentTimeMillis();
+				shippuden.orderEveryTechniqueList();
 				long f=System.currentTimeMillis();
 				System.out.println(f-i);
 				break;
 			case 5:
 				t1=System.currentTimeMillis();
+				System.out.println("nombre del clan : ");
+				String c = reader.nextLine();
+				System.out.println("nombre del ninja: ");
+				String n = reader.nextLine();
+				System.out.println("Tecnica: ");
+				String n2 = reader.nextLine();
+				System.out.print(shippuden.searchTechnique(c, n, n2));
 				tf=System.currentTimeMillis();
 				System.out.println(tf-t1);
 				break;
 			case 6:
 				t1=System.currentTimeMillis();
+				System.out.println("nombre del clan : ");
+				c = reader.nextLine();
+				System.out.println("nombre del ninja: ");
+				n = reader.nextLine();
+				System.out.println(shippuden.searNinja(c, n));
 				tf=System.currentTimeMillis();
 				System.out.println(tf-t1);
 				break;
 			case 7:
 				t1=System.currentTimeMillis();
+				System.out.println("nombre del clan : ");
+				c = reader.nextLine();
+				System.out.println(shippuden.searchClan(c));
 				tf=System.currentTimeMillis();
 				System.out.println(tf-t1);
 				break;
 			case 8:
 				t1=System.currentTimeMillis();
+				shippuden.orderEveryNinjaList();
 				tf=System.currentTimeMillis();
 				System.out.println(tf-t1);
 				break;
 			case 9:
 				t1=System.currentTimeMillis();
+				System.out.println("nombre del clan : ");
+				c = reader.nextLine();
+				System.out.println(shippuden.deleteNode(c));
 				tf=System.currentTimeMillis();
 				System.out.println(tf-t1);
 				break;
 			case 10:
 				t1=System.currentTimeMillis();
+				System.out.println("nombre del clan : ");
+				 c = reader.nextLine();
+				System.out.println("nombre del ninja: ");
+				 n = reader.nextLine();
+				System.out.println("Tecnica: ");
+				String t = reader.nextLine();
+				System.out.println(shippuden.deleteTech(c, n,  t));
 				tf=System.currentTimeMillis();
 				System.out.println(tf-t1);
 				break;
 			case 11:
 				long t2=System.currentTimeMillis();
+				System.out.println("nombre del clan : ");
+				 c = reader.nextLine();
+				System.out.println("nombre del ninja: ");
+				 n = reader.nextLine();
+				System.out.println(shippuden.deleteN(c, n ));
 				long tf2=System.currentTimeMillis();
 				System.out.println(tf2-t2);
 				break;
 			case 12:
 				long t3=System.currentTimeMillis();
+				shippuden.saveCharacters();
+				shippuden.saveClans();
+				shippuden.saveTechniques();
 				long tf3=System.currentTimeMillis();
 				System.out.println(tf3-t3);
 				break;
